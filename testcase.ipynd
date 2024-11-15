@@ -1,0 +1,46 @@
+import pandas as pd
+
+# Load the dataset
+data = pd.read_csv('car data.csv')
+
+# Function to generate test cases based on the dataset
+def generate_test_cases(data):
+    test_cases = []
+
+    # Test case for dataset loading
+    test_cases.append("Test Case: Ensure that the dataset is loaded without errors.")
+
+    # Test case for checking the number of rows and columns
+    num_rows, num_cols = data.shape
+    test_cases.append(f"Test Case: Verify that the dataset contains {num_rows} rows and {num_cols} columns.")
+
+    # Test case for checking the data types of each column
+    for column in data.columns:
+        dtype = data[column].dtype
+        test_cases.append(f"Test Case: Check that the column '{column}' is of type '{dtype}'.")
+
+    # Test case for checking missing values
+    missing_values = data.isnull().sum().sum()
+    test_cases.append(f"Test Case: Ensure that there are no missing values in the dataset (found: {missing_values}).")
+
+    # Test case for checking unique values in categorical columns
+    categorical_columns = ['Fuel_Type', 'Seller_Type', 'Transmission']  # Example categorical columns
+    for column in categorical_columns:
+        unique_values = data[column].unique()
+        test_cases.append(f"Test Case: Verify that the unique values in '{column}' are {unique_values}.")
+
+    # Test case for checking if the target variable is numeric
+    target_variable = 'Selling_Price'
+    if target_variable in data.columns:
+        test_cases.append(f"Test Case: Check that the target variable '{target_variable}' is numeric.")
+
+    return test_cases
+
+# Generate test cases
+generated_test_cases = generate_test_cases(data)
+
+# Output the generated test cases
+for i, test_case in enumerate(generated_test_cases, 1):
+    print(f"{i}. {test_case}")
+
+print("All test cases generated successfully.")
